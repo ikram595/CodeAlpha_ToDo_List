@@ -1,0 +1,9 @@
+function addTask() {}
+function countTotal() {}
+function countCompleted() {}
+function completeTask() {}
+function unCompleteTask() {}
+function countUncompleted() {}
+function priorityUp() {}
+function priorityDown() {}
+function deleteTask() {}

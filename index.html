@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do List</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="to_do_list">
+        <h1>TO DO LIST</h1>
+        <div class="task_field"> 
+            <input type="text" id="task_input" placeholder="Add New Task">
+            <button>Add</button>
+        </div>
+       
+        <p class="count">10 Total, 4 Completed, 6 Pending</p>
+        <div class="tasks">
+            <div class="uncompleted_tasks">
+                <h2>To Do</h2>
+                <div class="uncompleted_task">
+                    <p class="priority">1.</p>
+                    <div class="task_u">
+                        <input type="checkbox" id="checkbox">
+                        <p class="task__text">task1</p>
+                        <button>
+                        <img  height="20" src="https://img.icons8.com/ios/20/long-arrow-down.png" alt="long-arrow-down"/>
+                        </button>
+                        <button>
+                        <img  height="20" src="https://img.icons8.com/ios/20/FA5252/trash--v1.png" alt="trash--v1"/>
+                        </button>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="completed_tasks">
+                <h2>Completed</h2>
+                <div class="completed_task">
+                    <input type="checkbox" id="checkbox" checked>
+                    <p class="task__text">walk for 45 min</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
