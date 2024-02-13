@@ -96,6 +96,7 @@ body {
     transform: translateX(0);
   }
 }
+.completed_task,
 .uncompleted_task {
   display: flex;
   flex-wrap: nowrap;
@@ -107,14 +108,8 @@ body {
   padding: 10px;
 }
 .completed_task {
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  align-items: center;
   border: 2px solid rgb(0, 255, 17);
-  border-radius: 8px;
   margin: 0 10px 10px 20px;
-  padding: 10px;
 }
 .completed_task input {
   accent-color: rgb(0, 255, 17);
