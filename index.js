@@ -3,57 +3,53 @@ var uncompletedTasksContainer =
   document.getElementsByClassName("uncompleted_tasks")[0];
 var completedTasksContainer =
   document.getElementsByClassName("completed_tasks")[0];
+let uncompletedTasksList = document.getElementById("uncompleted_tasks_list");
+let completedTasksList = document.getElementById("completed_tasks_list");
 
 function addTask() {
   let userInput = document.getElementById("task_input").value;
   //console.log(userInput);
   if (userInput !== "") {
-    let newTaskDiv = document.createElement("div");
-    newTaskDiv.classList.add("task");
-    newTaskDiv.innerHTML = `<p class="priority">${priority}.</p>
-                    <div class="uncompleted_task">
-                        <input type="checkbox" id="checkbox_${priority}" onclick="completeTask(this)">
-                        <p class="task__text">${userInput}</p>
-                        <div class="buttons"> 
-                            <button onclick="priorityDown(this)">
-                                <img height="20" src="https://img.icons8.com/ios/20/FFFFFF/long-arrow-down.png" alt="long-arrow-down"/>
-                            </button>
-                            <button>
-                                <img height="20" src="https://img.icons8.com/ios/20/FA5252/trash--v1.png" alt="trash--v1"/>
-                            </button>
-                        </div>
+    let newTaskDiv = document.createElement("li");
+    newTaskDiv.classList.add("uncompleted_task");
+    newTaskDiv.innerHTML = `<div class="task">
+                                <input type="checkbox" id="checkbox_${priority}" onclick="completeTask(this)">
+                                <p class="task__text">${userInput}</p>
+                            </div>
+                            <div class="buttons"> 
+                                <button >
+                                    <img height="20" src="https://img.icons8.com/ios/20/FFFFFF/long-arrow-down.png" alt="long-arrow-down"/>
+                                </button>
+                                <button>
+                                    <img height="20" src="https://img.icons8.com/ios/20/FA5252/trash--v1.png" alt="trash--v1"/>
+                                </button>
+                            </div>
+                        
                 `;
-    displayPlaceholderText();
-    uncompletedTasksContainer.appendChild(newTaskDiv);
+    uncompletedTasksList.appendChild(newTaskDiv);
     priority++;
     document.getElementById("task_input").value = "";
     countTasks();
+    displayPlaceholderText();
   }
 }
 function completeTask(checkbox) {
-  let taskDiv = checkbox.parentElement;
-  let priority = taskDiv.querySelector(".priority");
-
+  let subParentDiv = checkbox.parentElement;
+  let parentDiv = subParentDiv.parentElement;
+  //console.log(parentDiv);
   if (checkbox.checked) {
-    taskDiv.classList.remove("uncompleted_task");
-    taskDiv.classList.add("completed_task");
-    completedTasksContainer.appendChild(taskDiv);
+    parentDiv.classList.remove("uncompleted_task");
+    parentDiv.classList.add("completed_task");
+    completedTasksList.appendChild(parentDiv);
   } else {
-    taskDiv.classList.remove("completed_task");
-    taskDiv.classList.add("uncompleted_task");
-    uncompletedTasksContainer.appendChild(taskDiv);
-    // Restore the original priority
-    let priorityElement = taskDiv.querySelector(".priority");
-    let originalPriority = parseInt(priorityElement.textContent);
-    priorityElement.textContent = originalPriority + ".";
+    parentDiv.classList.remove("completed_task");
+    parentDiv.classList.add("uncompleted_task");
+    uncompletedTasksList.appendChild(parentDiv);
   }
   countTasks();
   displayPlaceholderText();
 }
-function priorityDown(taskDiv) {
-  let priorityElement = taskDiv.querySelector(".priority");
-  priorityElement.textContent = parseInt(priorityElement.textContent) - 1 + ".";
-}
+
 function countTasks() {
   let displayCount = document.getElementById("tasksCount");
   let tasksUncompletedCount =
@@ -71,7 +67,7 @@ function countTasks() {
 }
 function displayPlaceholderText() {
   let tasksUncompletedCount =
-    document.querySelectorAll(".uncompleted_task").length + 1;
+    document.querySelectorAll(".uncompleted_task").length;
   //console.log(tasksUncompletedCount);
   let tasksCompletedCount = document.querySelectorAll(".completed_task").length;
 
