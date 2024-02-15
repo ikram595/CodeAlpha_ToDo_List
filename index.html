@@ -12,26 +12,20 @@
         <div class="task-container">
             <div>
                 <h1>TO DO LIST</h1>
-                <form  class="task-form">
+                <div class="task-form">
                     <input type="text" id="task_input" placeholder="Add New Task"/>
-                    <button type="submit">Add</button>
-                </form>
+                    <button onclick=addTask()>Add</button>
+                </div>
                 <div class="--flex-center ">
-                <p id="tasksCount">0 Total, 0 Completed, 0 Pending</p>
+                <p id="tasks-count">0 Total, 0 Completed, 0 Pending</p>
                 </div>
 
                 <hr/>
-                <p class="--flex-center --py">No task added, please add a task</p>
-                <div class="task">
-                    <p><b>task completed</b></p>
-                    <div class="task-icons">
-                        <i class="fa-solid fa-check-double" style="color: #44ff00;"></i>
-                        <i class="fa-solid fa-pen-to-square" style="color: #005eff;"></i>
-                        <i class="fa-solid fa-trash" style="color: #ff0000;"></i>
-                    </div>
-                </div>
+                <p class="--flex-center placeholder-message">No task added, please add a task</p>
+                <div id="tasks"></div>
             </div>
         </div>
      </div> 
 </body>
 </html>
+<script src="./index.js"></script>
