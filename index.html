@@ -4,44 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-do List</title>
+    <script src="https://kit.fontawesome.com/6f2f11d521.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="to_do_list">
-        <h1>TO DO LIST</h1>
-        <div class="task_field"> 
-            <input type="text" id="task_input" placeholder="Add New Task">
-            <button>Add</button>
-        </div>
-       
-        <p class="count">10 Total, 4 Completed, 6 Pending</p>
-        <div class="tasks">
-            <div class="uncompleted_tasks">
-                <h2>To Do</h2>
-                <div class="uncompleted_task">
-                    <p class="priority">1.</p>
-                    <div class="task_u">
-                        <input type="checkbox" id="checkbox">
-                        <p class="task__text">task1</p>
-                        <button>
-                        <img  height="20" src="https://img.icons8.com/ios/20/long-arrow-down.png" alt="long-arrow-down"/>
-                        </button>
-                        <button>
-                        <img  height="20" src="https://img.icons8.com/ios/20/FA5252/trash--v1.png" alt="trash--v1"/>
-                        </button>
+    <div class="app">
+        <div class="task-container">
+            <div>
+                <h1>TO DO LIST</h1>
+                <form  class="task-form">
+                    <input type="text" id="task_input" placeholder="Add New Task"/>
+                    <button type="submit">Add</button>
+                </form>
+                <div class="--flex-center ">
+                <p id="tasksCount">0 Total, 0 Completed, 0 Pending</p>
+                </div>
+
+                <hr/>
+                <p class="--flex-center --py">No task added, please add a task</p>
+                <div class="task">
+                    <p><b>task completed</b></p>
+                    <div class="task-icons">
+                        <i class="fa-solid fa-check-double" style="color: #44ff00;"></i>
+                        <i class="fa-solid fa-pen-to-square" style="color: #005eff;"></i>
+                        <i class="fa-solid fa-trash" style="color: #ff0000;"></i>
                     </div>
                 </div>
-                
-            </div>
-            <div class="completed_tasks">
-                <h2>Completed</h2>
-                <div class="completed_task">
-                    <input type="checkbox" id="checkbox" checked>
-                    <p class="task__text">walk for 45 min</p>
-                </div>
             </div>
         </div>
-
-    </div>
+     </div> 
 </body>
 </html>
