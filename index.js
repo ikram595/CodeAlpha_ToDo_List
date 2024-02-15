@@ -1,61 +1,81 @@
-var priority = 1;
-var uncompletedTasksContainer =
-  document.getElementsByClassName("uncompleted_tasks")[0];
-var completedTasksContainer =
-  document.getElementsByClassName("completed_tasks")[0];
-let uncompletedTasksList = document.getElementById("uncompleted_tasks_list");
-let completedTasksList = document.getElementById("completed_tasks_list");
-
 function addTask() {
   let userInput = document.getElementById("task_input").value;
-  //console.log(userInput);
-  if (userInput !== "") {
-    let newTaskDiv = document.createElement("li");
-    newTaskDiv.classList.add("uncompleted_task");
-    newTaskDiv.innerHTML = `<div class="task">
-                                <input type="checkbox" id="checkbox_${priority}" onclick="completeTask(this)">
-                                <p class="task__text">${userInput}</p>
-                            </div>
-                            <div class="buttons"> 
-                                <button >
-                                    <img height="20" src="https://img.icons8.com/ios/20/FFFFFF/long-arrow-down.png" alt="long-arrow-down"/>
-                                </button>
-                                <button>
-                                    <img height="20" src="https://img.icons8.com/ios/20/FA5252/trash--v1.png" alt="trash--v1"/>
-                                </button>
-                            </div>
-                        
-                `;
-    uncompletedTasksList.appendChild(newTaskDiv);
-    priority++;
-    document.getElementById("task_input").value = "";
+  const existingTask = Array.from(
+    document.querySelectorAll(".task p b") //array fih all tasks ' text(p fih b)
+  ).filter((task) => task.textContent.trim() === userInput);
+  if (userInput !== "" && existingTask.length === 0) {
+    let newTask = document.createElement("div");
+    let parentDiv = document.getElementById("tasks");
+    newTask.classList.add("task");
+    newTask.innerHTML = `<p><b>${userInput}</b></p>
+                    <div class="task-icons">
+                        <i class="fa-solid fa-check-double" style="color: #44ff00;" onclick=completeTask(this)></i>
+                        <i class="fa-solid fa-pen-to-square" style="color: #005eff;" onclick=editTask(this)></i>
+                        <i class="fa-solid fa-trash" style="color: #ff0000;" onclick=deleteTask(this)></i>
+                    </div>`;
+    parentDiv.appendChild(newTask);
     countTasks();
-    displayPlaceholderText();
+    displayPlaceHolderText();
+  } else if (existingTask.length > 0) {
+    //task exists
+    alert("Task already exists!");
   }
+  document.getElementById("task_input").value = "";
 }
-function completeTask(checkbox) {
-  let subParentDiv = checkbox.parentElement;
-  let parentDiv = subParentDiv.parentElement;
-  //console.log(parentDiv);
-  if (checkbox.checked) {
-    parentDiv.classList.remove("uncompleted_task");
-    parentDiv.classList.add("completed_task");
-    completedTasksList.appendChild(parentDiv);
-  } else {
-    parentDiv.classList.remove("completed_task");
-    parentDiv.classList.add("uncompleted_task");
-    uncompletedTasksList.appendChild(parentDiv);
-  }
+function deleteTask(icon) {
+  let parentDiv = icon.parentElement.parentElement;
+  parentDiv.remove();
   countTasks();
-  displayPlaceholderText();
+  displayPlaceHolderText();
 }
+let editingTask = null;
+function editTask(icon) {
+  let parentDiv = icon.parentElement.parentElement;
+  const taskText = parentDiv.querySelector("p > b").textContent;
+  document.getElementById("task_input").value = taskText;
+  const addButton = document.querySelector(".task-form button");
+  addButton.textContent = "Edit";
+  addButton.onclick = editTaskSubmit;
+  editingTask = parentDiv;
+}
+function editTaskSubmit() {
+  const userInput = document.getElementById("task_input").value.trim();
+  if (userInput !== "") {
+    const taskDiv = editingTask;
+    const taskText = taskDiv.querySelector("p > b");
+    taskText.textContent = userInput;
+    editingTask = null; //reset=> button="Add"
+    const addButton = document.querySelector(".task-form button");
+    addButton.textContent = "Add";
+    addButton.onclick = addTask;
 
+    countTasks();
+    displayPlaceHolderText();
+    document.getElementById("task_input").value = "";
+  }
+}
+function completeTask(icon) {
+  let subParentDiv = icon.parentElement;
+  let parentDiv = subParentDiv.parentElement;
+  parentDiv.classList.add("completed");
+  countTasks();
+  displayPlaceHolderText();
+}
+function displayPlaceHolderText() {
+  let tasksCount = document.querySelectorAll(".task").length;
+  let text = document.querySelector(".placeholder-message");
+  if (tasksCount === 0) {
+    text.style.display = "block";
+  } else {
+    text.style.display = "none";
+  }
+}
 function countTasks() {
-  let displayCount = document.getElementById("tasksCount");
-  let tasksUncompletedCount =
-    document.querySelectorAll(".uncompleted_task").length;
-  let tasksCompletedCount = document.querySelectorAll(".completed_task").length;
-  let totalTasksCount = tasksUncompletedCount + tasksCompletedCount;
+  let displayCount = document.getElementById("tasks-count");
+  let totalTasksCount = document.querySelectorAll(".task").length;
+  let tasksCompletedCount = document.querySelectorAll(".completed").length;
+  let tasksUncompletedCount = totalTasksCount - tasksCompletedCount;
+
   displayCount.textContent =
     totalTasksCount +
     " Total, " +
@@ -64,29 +84,4 @@ function countTasks() {
     tasksUncompletedCount +
     " Pending.";
   //console.log(totalTasksCount);
-}
-function displayPlaceholderText() {
-  let tasksUncompletedCount =
-    document.querySelectorAll(".uncompleted_task").length;
-  //console.log(tasksUncompletedCount);
-  let tasksCompletedCount = document.querySelectorAll(".completed_task").length;
-
-  let uncompletedPlaceholder = uncompletedTasksContainer.querySelector(
-    ".placeholder-message"
-  );
-  let completedPlaceholder = completedTasksContainer.querySelector(
-    ".placeholder-message"
-  );
-
-  if (tasksUncompletedCount === 0) {
-    uncompletedPlaceholder.style.display = "block";
-  } else {
-    uncompletedPlaceholder.style.display = "none";
-  }
-
-  if (tasksCompletedCount === 0) {
-    completedPlaceholder.style.display = "block";
-  } else {
-    completedPlaceholder.style.display = "none";
-  }
 }
